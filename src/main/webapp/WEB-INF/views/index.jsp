@@ -46,7 +46,7 @@
 <h1>와이파이 정보 구하기</h1>
 
 <div id="link-list">
-    <a href="index.jsp">홈</a>
+    <a href="home">홈</a>
     &#124;
     <a href="test">위치 히스토리 목록</a>
     &#124;
@@ -57,7 +57,7 @@
     <a href="bookmark-group.jsp">즐겨 찾기 그룹 관리</a>
 </div>
 
-<form method="get" action="index.jsp" id="form-list">
+<form id="form-list" action="wifi-Info"  method="get" >
     <label>
         LAT: <input type="text" id="lat" name="lat" value="0.0">
     </label>
