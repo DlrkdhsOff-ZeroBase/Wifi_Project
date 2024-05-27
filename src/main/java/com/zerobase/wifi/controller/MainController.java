@@ -12,20 +12,14 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    @Autowired
-    private UserService userService;
-
     @GetMapping("/")
     public String home() {
         return "index";
     }
 
-    @RequestMapping("/load-wifi")
-    public String loadWifi() {
-        List<UserNameDTO> userList = userService.getUserList();
-        for (UserNameDTO user : userList) {
-            System.out.println(user);
-        }
-        return null;
+    @GetMapping("/test")
+    public String test() {
+        return "test";
     }
+
 }

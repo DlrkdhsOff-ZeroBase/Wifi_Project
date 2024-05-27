@@ -48,9 +48,9 @@
 <div id="link-list">
     <a href="index.jsp">홈</a>
     &#124;
-    <a href="history.jsp">위치 히스토리 목록</a>
+    <a href="test">위치 히스토리 목록</a>
     &#124;
-    <a href="load-wifi">Open API 와이파이 정보 가져오기</a>
+    <a href="lode-wifi-data">Open API 와이파이 정보 가져오기</a>
     &#124;
     <a href="bookmark-list.jsp">즐겨 찾기 보기</a>
     &#124;
