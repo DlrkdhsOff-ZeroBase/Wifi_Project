@@ -26,6 +26,6 @@ public class WifiController {
         }
 
         model.addAttribute("list", list);
-        return "home";
+        return "index";
     }
 }
