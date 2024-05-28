@@ -15,6 +15,16 @@ public class WifiController {
     @Autowired
     private WifiService wifiService;
 
+    @GetMapping("/")
+    public String home() {
+        return "index";
+    }
+
+    @GetMapping("home")
+    public String test() {
+        return "index";
+    }
+
     @GetMapping("/wifi-Info")
     public String wifiInfo(@RequestParam("lat") double lat,
                            @RequestParam("lnt") double lnt,

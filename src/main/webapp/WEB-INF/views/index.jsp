@@ -1,3 +1,5 @@
+<%@ page import="com.zerobase.wifi.dto.WifiDTO" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -48,7 +50,7 @@
 <div id="link-list">
     <a href="home">홈</a>
     &#124;
-    <a href="test">위치 히스토리 목록</a>
+    <a href="history">위치 히스토리 목록</a>
     &#124;
     <a href="lode-wifi-data">Open API 와이파이 정보 가져오기</a>
     &#124;
@@ -57,7 +59,7 @@
     <a href="bookmark-group.jsp">즐겨 찾기 그룹 관리</a>
 </div>
 
-<form id="form-list" action="wifi-Info"  method="get" >
+<form id="form-list" action="wifi-Info" method="get">
     <label>
         LAT: <input type="text" id="lat" name="lat" value="0.0">
     </label>
@@ -91,123 +93,56 @@
     </tr>
     </thead>
     <tbody>
-<%--    <%--%>
-<%--        String lat = request.getParameter("lat");--%>
-<%--        String lnt = request.getParameter("lnt");--%>
-
-<%--        double latValue = 0.0;--%>
-<%--        double lntValue = 0.0;--%>
-
-<%--        if (lat != null && !lat.isEmpty()) {--%>
-<%--            try {--%>
-<%--                latValue = Double.parseDouble(lat);--%>
-<%--            } catch (NumberFormatException e) {--%>
-<%--                e.printStackTrace();--%>
-<%--            }--%>
-<%--        }--%>
-
-<%--        if (lnt != null && !lnt.isEmpty()) {--%>
-<%--            try {--%>
-<%--                lntValue = Double.parseDouble(lnt);--%>
-<%--            } catch (NumberFormatException e) {--%>
-<%--                e.printStackTrace();--%>
-<%--            }--%>
-<%--        }--%>
-
-<%--        if (latValue == 0.0 && lntValue == 0.0) {--%>
-<%--    %>--%>
-<%--    <tr>--%>
-<%--        <td colspan="17">위치 정보를 입력한 후에 조회해 주세요.</td>--%>
-<%--    </tr>--%>
-<%--    <%--%>
-<%--    } else {--%>
-<%--        HistoryDto historyDto = new HistoryDto();--%>
-<%--        historyDto.setLat(latValue);--%>
-<%--        historyDto.setLnt(lntValue);--%>
-
-<%--        HistoryDao historyDao = new HistoryDao();--%>
-<%--        historyDao.insert(historyDto);--%>
-
-<%--        WifiDao wifiDao = new WifiDao();--%>
-<%--        List<WifiDto> wifiDaoList = wifiDao.selectList(lntValue, latValue);--%>
-
-<%--        for (WifiDto item : wifiDaoList) {--%>
-<%--    %>--%>
-<%--    <tr>--%>
-<%--        <td>--%>
-<%--            <%= item.getDist() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getMgrNo() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getWrdofc() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <a href="detail.jsp?mgrNo=<%= item.getMgrNo() %>&dist=<%= item.getDist() %>">--%>
-<%--                <%= item.getMainNm() %>--%>
-<%--            </a>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getAdres1() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getAdres2() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getInstlFloor() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getInstlTy() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getInstlMby() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getSvcSe() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getCmcwr() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getCnstcYear() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getInoutDoor() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getRemars3() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getLnt() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getLat() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getWorkDttm() %>--%>
-<%--        </td>--%>
-<%--    </tr>--%>
-<%--    <%--%>
-<%--            }--%>
-<%--        }--%>
-<%--    %>--%>
-<%--    </tbody>--%>
+    <%
+        List<WifiDTO> list = (List<WifiDTO>) request.getAttribute("list");
+        if (list != null && !list.isEmpty()) {
+            for (WifiDTO item : list) {
+    %>
+    <tr>
+        <td><%= item.getDistance() %></td>
+        <td><%= item.getMgr_no() %></td>
+        <td><%= item.getBorough() %></td>
+        <td><%= item.getWifi_no() %></td>
+        <td><%= item.getAddress1() %></td>
+        <td><%= item.getAddress2() %></td>
+        <td><%= item.getIn_floor() %></td>
+        <td><%= item.getIn_type() %></td>
+        <td><%= item.getIn_by() %></td>
+        <td><%= item.getService() %></td>
+        <td><%= item.getNetwork() %></td>
+        <td><%= item.getC_year() %></td>
+        <td><%= item.getIn_out() %></td>
+        <td><%= item.getR_connection() %></td>
+        <td><%= item.getLat() %></td>
+        <td><%= item.getLnt() %></td>
+        <td><%= item.getWork_date() %></td>
+    </tr>
+    <%
+        }
+    } else {
+    %>
+    <tr>
+        <td colspan="17">위치 정보를 입력한 후에 조회해 주세요.</td>
+    </tr>
+    <%
+        }
+    %>
+    </tbody>
 </table>
 
 <script>
-    const params = new URLSearchParams(window.location.search)
-    const lnt = params.get("lnt")
-    const lat = params.get("lat")
+    const params = new URLSearchParams(window.location.search);
+    const lnt = params.get("lnt");
+    const lat = params.get("lat");
 
     if (lnt) {
-        const lntElement = document.getElementById("lnt")
-        lntElement.setAttribute("value", lnt)
+        const lntElement = document.getElementById("lnt");
+        lntElement.setAttribute("value", lnt);
     }
 
     if (lat) {
-        const latElement = document.getElementById("lat")
-        latElement.setAttribute("value", lat)
+        const latElement = document.getElementById("lat");
+        latElement.setAttribute("value", lat);
     }
 
     function getLocation() {
