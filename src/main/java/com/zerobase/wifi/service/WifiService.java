@@ -1,6 +1,5 @@
 package com.zerobase.wifi.service;
 
-import com.zerobase.wifi.dto.HistoryDTO;
 import com.zerobase.wifi.dto.WifiDTO;
 import com.zerobase.wifi.mapper.HistoryMapper;
 import com.zerobase.wifi.mapper.WifiMapper;

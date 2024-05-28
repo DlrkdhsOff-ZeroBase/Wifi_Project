@@ -86,16 +86,16 @@
             <%= dto.getNo() %>
         </td>
         <td>
-            <%= dto.getInsertDate().toString() %>
+            <%= dto.getInsertDate() %>
         </td>
         <td>
-            <%= dto.getUpdateDate().toString() %>
+            <%= dto.getUpdateDate() %>
         </td>
         <td>
-            <a href="bookmark-group-edit.jsp?id=<%= dto.getId() %>">
+            <a href="update-bookmark-group?id=<%= dto.getId() %>">
                 수정
             </a>
-            <a href="bookmark-group-delete.jsp?id=<%= dto.getId() %>">
+            <a href="delete-bookmark-group?id=<%= dto.getId() %>">
                 삭제
             </a>
         </td>
@@ -114,9 +114,13 @@
     %>
     <script type="text/javascript">
         window.onload = function() {
-            var check = "<%= request.getAttribute("check") %>";
-            if (check === "true") {
-                alert("북마크 그룹 정보를 추가하였습니다");
+            const check = "<%= request.getAttribute("check") %>";
+            if (check === "insert success") {
+                alert("북마크 그룹 정보를 추가하였습니다.");
+            }else if (check === "update success") {
+                alert("수정을 성공하였습니다.");
+            }else if (check === "delete success") {
+                alert("삭제 성공하였습니다.")
             }
         };
     </script>

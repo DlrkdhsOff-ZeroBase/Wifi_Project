@@ -15,4 +15,13 @@
         select * from bookmarks
     </select>
 
+    <update id="updateBookMark" parameterType="map">
+        update bookmarks set name=#{name}, no=#{no}
+        where id =#{id}
+    </update>
+
+    <delete id="deleteBookMark" parameterType="long">
+        delete from bookmarks where id=#{id}
+    </delete>
+
 </mapper>

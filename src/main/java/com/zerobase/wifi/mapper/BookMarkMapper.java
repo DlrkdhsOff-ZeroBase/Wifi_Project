@@ -12,4 +12,8 @@ public interface BookMarkMapper {
     void insertBookMark(Map<String, Object> map);
 
     List<BookMarkDTO> getBookMarkList();
+
+    void updateBookMark(Map<String, Object> map);
+
+    void deleteBookMark(long id);
 }
