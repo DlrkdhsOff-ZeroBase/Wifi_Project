@@ -1,5 +1,3 @@
-<%@ page import="com.zerobase.wifi.dto.HistoryDTO" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -18,7 +16,6 @@
 
         #table-list td, #table-list th {
             border: 1px solid #ddd;
-            text-align: center;
             font-size: 14px;
             padding: 8px;
         }
@@ -27,20 +24,18 @@
             background-color: #f2f2f2;
         }
 
-        #table-list tr:hover {
-            background-color: #ddd;
-        }
-
         #table-list th {
             padding-top: 12px;
             padding-bottom: 12px;
             background-color: #04AA6D;
+            text-align: center;
             color: white;
+            width: 20%;
         }
     </style>
 </head>
 <body>
-<h1>위치 히스토리 목록</h1>
+<h1>즐겨찾기 그룹 관리</h1>
 
 <div id="link-list">
     <a href="home">홈</a>
@@ -54,42 +49,26 @@
     <a href="bookmark-group">북마크 그룹 관리</a>
 </div>
 
-<table id="table-list">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>X좌표</th>
-        <th>Y좌표</th>
-        <th>조회일자</th>
-        <th>비고</th>
-    </tr>
-    </thead>
-    <tbody>
-    <%
-        List<HistoryDTO> list = (List<HistoryDTO>) request.getAttribute("list");
-        if (list != null && !list.isEmpty()) {
-            for (HistoryDTO item : list) {
-    %>
-    <tr>
-        <td><%= item.getId() %></td>
-        <td><%= item.getLat() %></td>
-        <td><%= item.getLnt() %></td>
-        <td><%= item.getDate() %></td>
-        <td>
-            <button onclick="deleteId(<%= item.getId() %>);">삭제</button>
-        </td>
-    </tr>
-    <%
-        }
-    }
-    %>
-    </tbody>
-</table>
-
-<script>
-    function deleteId(id) {
-        location.href = "deleteHistory?id=" + id;
-    }
-</script>
+<form method="post" action="add-bookmark-group">
+    <table id="table-list">
+        <tr>
+            <th>북마크 이름</th>
+            <td>
+                <input type="text" name="name">
+            </td>
+        </tr>
+        <tr>
+            <th>순서</th>
+            <td>
+                <input type="text" name="no">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <input type="submit" value="추가">
+            </td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>

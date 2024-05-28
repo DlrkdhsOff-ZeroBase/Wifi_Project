@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.zerobase.wifi.mapper.HistoryMapper">
+
+    <!--검색 기록 저장-->
+    <insert id="saveHistory" parameterType="Map">
+        INSERT INTO history (lat, lnt) VALUES (#{lat}, #{lnt});
+    </insert>
+
+    <!--검색기록 반환-->
+    <select id="getHistory" resultType="HistoryDTO">
+        select * from history
+    </select>
+
+    <!--검색기록 삭제-->
+    <delete id="deleteHistory" parameterType="long">
+        CALL delete_history(#{id})
+    </delete>
+
+    <!--새로운 순서대로 다시 저장-->
+    <insert id="insertHistory" parameterType="map">
+        CALL insert_history(#{lat}, #{lnt})
+    </insert>
+
+</mapper>

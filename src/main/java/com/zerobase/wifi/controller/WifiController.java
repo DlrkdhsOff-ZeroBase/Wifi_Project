@@ -42,22 +42,4 @@ public class WifiController {
         session.setAttribute("wifiList", list);
         return "index";
     }
-
-
-    @GetMapping("/detail")
-    public String detail(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        List<WifiDTO> wifiList = (List<WifiDTO>) session.getAttribute("wifiList");
-
-        String mgr_no = request.getParameter("mgr_no");
-        if (wifiList != null) {
-            for (WifiDTO wifi : wifiList) {
-                if (wifi.getMgr_no().equals(mgr_no)) {
-                    model.addAttribute("wifi", wifi);
-                    break;
-                }
-            }
-        }
-        return "detail";
-    }
 }
