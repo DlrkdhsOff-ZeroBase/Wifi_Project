@@ -49,35 +49,66 @@
     <a href="bookmark-group">북마크 그룹 관리</a>
 </div>
 
-<form method="post" action="add-bookmark-group">
+<%
+    String id = request.getParameter("id");
+    String actionUrl;
+    String bt;
+    if (id != null && !id.isEmpty()) {
+        actionUrl = "update-bookmark-group";
+        bt = "수정";
+    } else {
+        actionUrl = "add-bookmark-group";
+        bt = "추가";
+    }
+%>
+<form id="bookmarkForm" action="<%= actionUrl %>" method="post"  onsubmit="return validateForm()">
     <table id="table-list">
         <tr>
             <th>북마크 이름</th>
             <td>
-                <input type="text" name="name">
+                <label for="name"></label><input type="text" name="name" id="name">
             </td>
         </tr>
         <tr>
             <th>순서</th>
             <td>
-                <input type="text" name="no">
+                <label for="no"></label><input type="text" name="no" id="no">
             </td>
         </tr>
         <tr>
             <td colspan="2" style="text-align: center;">
-                <input type="submit" value="추가">
+                <input type="submit" value="<%= bt %>">
             </td>
         </tr>
     </table>
+    <input type="hidden" name="id" value="<%= id %>">
 </form>
 
 <script type="text/javascript">
+    function validateForm() {
+        const name = document.getElementById("name").value;
+        const no = document.getElementById("no").value;
+
+        if (name === "" && no === "") {
+            alert("모든 필드를 입력해주세요.");
+            return false;
+        }else if (name === "") {
+            alert("이름을 입력해주세요.");
+            return false;
+        }else if (no === "") {
+            alert("순서를 입력해주세요.");
+            return false;
+        }
+
+        return true;
+    }
+
     window.onload = function() {
-        var check = "<%= request.getAttribute("check") %>";
-        if (check === "empty") {
-            alert("입력하지 않은 부분이 있습니다 다시 입력해주세요.");
-        }else if (check === "no"){
-            alert("중복된 순서 입니다. 다시 입력해주세요.");
+        const check = "<%= request.getAttribute("check") %>";
+        if (check === "insert false") {
+            alert("중복된 값이 있습니다. 다시 입력해주세요.");
+        }else if (check === "update false") {
+            alert("수정을 실패했습니다 다시 입력해주세요");
         }
     };
 </script>
