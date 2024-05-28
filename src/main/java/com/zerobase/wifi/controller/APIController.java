@@ -31,13 +31,13 @@ public class APIController {
         try {
             int start = 1;
             int end = 1000;
-            int maxData = 30000; // 최대 데이터 개수 설정
-            int totalCount = getTotalCount();
-            System.out.println(totalCount);
-            int totalFetched = 0;
+            int maxData = Integer.MAX_VALUE; // 최대 데이터 개수 설정
+            int totalCount = getTotalCount(); // 모든 데이터 값
+
+            int totalFetched = 0;   // 현재 저장한 데이터 값
 
             while (start <= totalCount && totalFetched < maxData) {
-                String xmlData = fetchData(start, end);
+                String xmlData = sendRequest(start, end);
                 int fetchedDataCount = apiService.saveWifiData(xmlData);
                 totalFetched += fetchedDataCount;
 
@@ -61,67 +61,40 @@ public class APIController {
         return "lode-wifi-data";
     }
 
-    private int getTotalCount() throws Exception {
-        StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088");
-        urlBuilder.append("/").append(URLEncoder.encode("62565469726b616f37346a5343494c", StandardCharsets.UTF_8));
-        urlBuilder.append("/").append(URLEncoder.encode("xml", StandardCharsets.UTF_8));
-        urlBuilder.append("/").append(URLEncoder.encode("TbPublicWifiInfo", StandardCharsets.UTF_8));
-        urlBuilder.append("/").append(URLEncoder.encode("1", StandardCharsets.UTF_8));
-        urlBuilder.append("/").append(URLEncoder.encode("1", StandardCharsets.UTF_8));
-
-        URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/xml");
-
-        BufferedReader rd;
-        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
-
-        // XML 파싱하여 totalCount 가져오기
-        int totalCount = parseTotalCount(sb.toString());
-        return totalCount;
-    }
-
-    private int parseTotalCount(String xmlData) {
+    public int getTotalCount() throws Exception {
+        String response = sendRequest(1,1);
         int totalCount = 0;
+
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(new InputSource(new StringReader(xmlData)));
+            Document doc = builder.parse(new InputSource(new StringReader(response)));
             doc.getDocumentElement().normalize();
 
             // "list_total_count" 엘리먼트 찾기
             NodeList nodeList = doc.getElementsByTagName("list_total_count");
+
             if (nodeList.getLength() > 0) {
                 Element element = (Element) nodeList.item(0);
                 totalCount = Integer.parseInt(element.getTextContent());
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return totalCount;
     }
 
-    private String fetchData(int start, int end) throws Exception {
-        StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088");
-        urlBuilder.append("/").append(URLEncoder.encode("62565469726b616f37346a5343494c", StandardCharsets.UTF_8));
-        urlBuilder.append("/").append(URLEncoder.encode("xml", StandardCharsets.UTF_8));
-        urlBuilder.append("/").append(URLEncoder.encode("TbPublicWifiInfo", StandardCharsets.UTF_8));
-        urlBuilder.append("/").append(URLEncoder.encode(String.valueOf(start), StandardCharsets.UTF_8));
-        urlBuilder.append("/").append(URLEncoder.encode(String.valueOf(end), StandardCharsets.UTF_8));
+    private String sendRequest(int start, int end) throws Exception {
 
-        URL url = new URL(urlBuilder.toString());
+        String urlBuilder = "http://openapi.seoul.go.kr:8088" + "/" +
+                URLEncoder.encode("62565469726b616f37346a5343494c", StandardCharsets.UTF_8) +
+                "/" + URLEncoder.encode("xml", StandardCharsets.UTF_8) +
+                "/" + URLEncoder.encode("TbPublicWifiInfo", StandardCharsets.UTF_8) +
+                "/" + URLEncoder.encode(String.valueOf(start), StandardCharsets.UTF_8) +
+                "/" + URLEncoder.encode(String.valueOf(end), StandardCharsets.UTF_8);
+
+        URL url = new URL(urlBuilder);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/xml");
@@ -132,11 +105,14 @@ public class APIController {
         } else {
             rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
         }
+
         StringBuilder sb = new StringBuilder();
         String line;
+
         while ((line = rd.readLine()) != null) {
             sb.append(line);
         }
+
         rd.close();
         conn.disconnect();
 

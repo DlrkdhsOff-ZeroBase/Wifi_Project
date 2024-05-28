@@ -2,7 +2,6 @@ package com.zerobase.wifi.controller;
 
 import java.util.*;
 import com.zerobase.wifi.dto.WifiDTO;
-import com.zerobase.wifi.service.APIService;
 import com.zerobase.wifi.service.WifiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
