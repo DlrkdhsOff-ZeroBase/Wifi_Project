@@ -38,17 +38,6 @@ public class WifiService {
         return list;
     }
 
-    // 검색 기록을 가지고 오는 메서드
-    public List<HistoryDTO> getHistory() {
-        return wifiMapper.getHistory();
-    }
-
-    // 검색 기록울 삭제하는 메서드
-    public List<HistoryDTO> deleteHistory(long id) {
-        wifiMapper.deleteHistory(id);
-        return wifiMapper.getHistory();
-    }
-
     // 현재 좌표와 거리 비교할 좌표의 거리 구하는 메서드
     public String getDistance(double lat1, double lng1, double lat2, double lng2) {
         int radius = 6371;

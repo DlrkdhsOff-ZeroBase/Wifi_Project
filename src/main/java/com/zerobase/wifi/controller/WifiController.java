@@ -43,26 +43,6 @@ public class WifiController {
         return "index";
     }
 
-    // 기록 출력
-    @GetMapping("/getHistory")
-    public String history(Model model) {
-
-        List<HistoryDTO> list = wifiService.getHistory();
-        model.addAttribute("list", list);
-
-        return "history";
-    }
-
-    // 기록 삭제
-    @GetMapping("/deleteHistory")
-    public String history(@RequestParam String id, Model model) {
-
-        List<HistoryDTO> list = wifiService.deleteHistory(Long.parseLong(id));
-        model.addAttribute("list", list);
-
-        return "history";
-
-    }
 
     @GetMapping("/detail")
     public String detail(HttpServletRequest request, Model model) {

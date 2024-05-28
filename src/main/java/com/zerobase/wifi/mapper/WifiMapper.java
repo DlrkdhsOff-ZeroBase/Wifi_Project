@@ -22,8 +22,9 @@ public interface WifiMapper {
     // 검색 기록 반환
     List<HistoryDTO> getHistory();
 
-    // 검색 기록 삭제
+    // 프로시저를 통해 검색기록 삭제
     void deleteHistory(long id);
 
+    // 프로시저를 통한 검색기록 저장
     void insertHistory(Map<String, Double> map);
 }
