@@ -1,7 +1,7 @@
 package com.zerobase.wifi.service;
 
 import com.zerobase.wifi.dto.WifiDTO;
-import com.zerobase.wifi.mapper.APIMapper;
+import com.zerobase.wifi.mapper.WifiMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -20,12 +20,12 @@ import java.util.List;
 public class APIService {
 
     @Autowired
-    private APIMapper apiMapper;
+    private WifiMapper wifiMapper;
 
     public int saveWifiData(String xmlData) {
         List<WifiDTO> wifiList = parseXmlData(xmlData);
         for (WifiDTO wifiDTO : wifiList) {
-            apiMapper.save(wifiDTO);
+            wifiMapper.save(wifiDTO);
         }
         return wifiList.size(); // 저장된 데이터의 개수를 반환
     }

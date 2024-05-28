@@ -21,6 +21,7 @@ public class WifiService {
         map.put("lnt", lnt);
 
         List<WifiDTO> list = wifiMapper.get_Wifi_Info(map);
+        wifiMapper.saveHistory(map);
 
         for (WifiDTO dto : list) {
             dto.setDistance(getDistance(lat, lnt, dto.getLat(), dto.getLnt()));
