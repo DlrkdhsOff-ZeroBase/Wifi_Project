@@ -5,7 +5,13 @@
 
 
 <mapper namespace="com.zerobase.wifi.mapper.WifiMapper">
-    <select id="get_Wifi_Info" resultType="com.zerobase.wifi.dto.WifiDTO">
-        SELECT * FROM wifiAPI LIMIT 20;
+    <select id="get_Wifi_Info" resultType="WifiDTO" parameterType="Map">
+        SELECT *,
+               ST_Distance_Sphere(point(lnt, lat), point(#{lnt}, #{lat}))
+                   AS distance
+        FROM wifiAPI
+        ORDER BY distance
+        LIMIT 20;
     </select>
+
 </mapper>
