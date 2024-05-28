@@ -7,7 +7,7 @@ public class WifiDTO {
     private String distance;        // 거리
     private String mgr_no;          // 관리 번호
     private String borough;         // 자치구
-    private String wifi_no;          // 와이파이 번호
+    private String wifi_name;          // 와이파이명
     private String address1;        // 도로명주소
     private String address2;        // 상세주소
     private String in_floor;         // 설치위치

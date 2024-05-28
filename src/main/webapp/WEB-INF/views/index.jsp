@@ -1,6 +1,6 @@
 <%@ page import="com.zerobase.wifi.dto.WifiDTO" %>
 <%@ page import="java.util.List" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,6 +53,10 @@
     <a href="getHistory">위치 히스토리 목록</a>
     &#124;
     <a href="lode-wifi-data">Open API 와이파이 정보 가져오기</a>
+    &#124;
+    <a href="bookmark-list.jsp">즐겨찾기 보기</a>
+    &#124;
+    <a href="bookmark-group.jsp">즐겨찾기 그룹 관리</a>
 </div>
 
 <form id="form-list" action="wifi-Info" method="post">
@@ -90,7 +94,7 @@
     </thead>
     <tbody>
     <%
-        List<WifiDTO> list = (List<WifiDTO>) request.getAttribute("list");
+        List<WifiDTO> list = (List<WifiDTO>) session.getAttribute("wifiList");
         if (list != null && !list.isEmpty()) {
             for (WifiDTO item : list) {
     %>
@@ -98,7 +102,9 @@
         <td><%= item.getDistance() %></td>
         <td><%= item.getMgr_no() %></td>
         <td><%= item.getBorough() %></td>
-        <td><%= item.getWifi_no() %></td>
+        <td><a href="detail?mgr_no=<%= item.getMgr_no() %>&sessionId=<%= session.getId() %>">
+            <%= item.getWifi_name() %></a>
+        </td>
         <td><%= item.getAddress1() %></td>
         <td><%= item.getAddress2() %></td>
         <td><%= item.getIn_floor() %></td>

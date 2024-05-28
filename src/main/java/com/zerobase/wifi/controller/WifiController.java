@@ -5,6 +5,8 @@ import java.util.*;
 import com.zerobase.wifi.dto.HistoryDTO;
 import com.zerobase.wifi.dto.WifiDTO;
 import com.zerobase.wifi.service.WifiService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,10 +35,11 @@ public class WifiController {
     @PostMapping("/wifi-Info")
     public String wifiInfo(@RequestParam double lat,
                            @RequestParam double lnt,
-                           Model model) {
+                           HttpServletRequest request) {
 
         List<WifiDTO> list = wifiService.getList(lat, lnt);
-        model.addAttribute("list", list);
+        HttpSession session = request.getSession();
+        session.setAttribute("wifiList", list);
         return "index";
     }
 
@@ -59,5 +62,22 @@ public class WifiController {
 
         return "history";
 
+    }
+
+    @GetMapping("/detail")
+    public String detail(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        List<WifiDTO> wifiList = (List<WifiDTO>) session.getAttribute("wifiList");
+
+        String mgr_no = request.getParameter("mgr_no");
+        if (wifiList != null) {
+            for (WifiDTO wifi : wifiList) {
+                if (wifi.getMgr_no().equals(mgr_no)) {
+                    model.addAttribute("wifi", wifi);
+                    break;
+                }
+            }
+        }
+        return "detail";
     }
 }

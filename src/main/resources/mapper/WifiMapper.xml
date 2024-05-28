@@ -9,11 +9,11 @@
     <!--와이파이 정보 저장-->
     <insert id="save" parameterType="WifiDTO">
         INSERT INTO
-            wifiAPI (mgr_no, borough, wifi_no, address1, address2,
+            wifiAPI (mgr_no, borough, wifi_name, address1, address2,
                      in_floor, in_type, in_by, service, network,
                      c_year, in_out, r_connection, lat, lnt, work_date)
 
-        VALUES (#{mgr_no}, #{borough}, #{wifi_no}, #{address1},
+        VALUES (#{mgr_no}, #{borough}, #{wifi_name}, #{address1},
                 #{address2}, #{in_floor}, #{in_type}, #{in_by},
                 #{service}, #{network}, #{c_year}, #{in_out},
                 #{r_connection}, #{lat}, #{lnt}, #{work_date})

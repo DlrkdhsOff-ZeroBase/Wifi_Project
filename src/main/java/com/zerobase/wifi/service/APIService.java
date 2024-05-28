@@ -46,7 +46,7 @@ public class APIService {
                     WifiDTO wifiDTO = new WifiDTO();
                     wifiDTO.setMgr_no(element.getElementsByTagName("X_SWIFI_MGR_NO").item(0).getTextContent());
                     wifiDTO.setBorough(element.getElementsByTagName("X_SWIFI_WRDOFC").item(0).getTextContent());
-                    wifiDTO.setWifi_no(element.getElementsByTagName("X_SWIFI_MAIN_NM").item(0).getTextContent());
+                    wifiDTO.setWifi_name(element.getElementsByTagName("X_SWIFI_MAIN_NM").item(0).getTextContent());
                     wifiDTO.setAddress1(element.getElementsByTagName("X_SWIFI_ADRES1").item(0).getTextContent());
                     wifiDTO.setAddress2(element.getElementsByTagName("X_SWIFI_ADRES2").item(0).getTextContent());
                     wifiDTO.setIn_floor(element.getElementsByTagName("X_SWIFI_INSTL_FLOOR").item(0).getTextContent());

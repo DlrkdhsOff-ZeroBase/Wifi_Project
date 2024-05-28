@@ -48,6 +48,10 @@
     <a href="getHistory">위치 히스토리 목록</a>
     &#124;
     <a href="lode-wifi-data">Open API 와이파이 정보 가져오기</a>
+    &#124;
+    <a href="bookmark-list.jsp">즐겨찾기 보기</a>
+    &#124;
+    <a href="bookmark-group.jsp">즐겨찾기 그룹 관리</a>
 </div>
 
 <table id="table-list">
