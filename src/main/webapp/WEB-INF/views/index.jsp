@@ -59,7 +59,7 @@
     <a href="bookmark-group.jsp">즐겨 찾기 그룹 관리</a>
 </div>
 
-<form id="form-list" action="wifi-Info" method="get">
+<form id="form-list" action="wifi-Info" method="post">
     <label>
         LAT: <input type="text" id="lat" name="lat" value="0.0">
     </label>

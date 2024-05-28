@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -20,22 +21,27 @@ public class WifiController {
         return "index";
     }
 
-    @GetMapping("home")
+    @GetMapping("/home")
     public String test() {
         return "index";
     }
 
-    @GetMapping("/wifi-Info")
+    @PostMapping("/wifi-Info")
     public String wifiInfo(@RequestParam("lat") double lat,
                            @RequestParam("lnt") double lnt,
                            Model model) {
 
         List<WifiDTO> list = wifiService.getList(lat, lnt);
-        for(WifiDTO wifi : list) {
+        for (WifiDTO wifi : list) {
             System.out.println(wifi.getDistance());
         }
 
         model.addAttribute("list", list);
         return "index";
+    }
+
+    @GetMapping("/history")
+    public String history() {
+        return "history";
     }
 }
