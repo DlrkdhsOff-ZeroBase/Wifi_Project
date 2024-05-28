@@ -32,6 +32,9 @@ public class WifiService {
         }
 
         List<WifiDTO> list = wifiMapper.get_Wifi_Info(map);
+        for (WifiDTO dto : list) {
+            dto.setDistance(getDistance(lat, lnt, dto.getLat(), dto.getLnt()));
+        }
         return list;
     }
 
