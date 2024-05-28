@@ -6,12 +6,20 @@
 
 <mapper namespace="com.zerobase.wifi.mapper.WifiMapper">
 
+    <!--와이파이 정보 저장-->
     <insert id="save" parameterType="WifiDTO">
-        INSERT INTO wifiAPI (mgr_no, borough, wifi_no, address1, address2, in_floor, in_type, in_by, service, network, c_year, in_out, r_connection, lat, lnt, work_date)
-        VALUES (#{mgr_no}, #{borough}, #{wifi_no}, #{address1}, #{address2}, #{in_floor}, #{in_type}, #{in_by}, #{service}, #{network}, #{c_year}, #{in_out}, #{r_connection}, #{lat}, #{lnt}, #{work_date})
+        INSERT INTO
+            wifiAPI (mgr_no, borough, wifi_no, address1, address2,
+                     in_floor, in_type, in_by, service, network,
+                     c_year, in_out, r_connection, lat, lnt, work_date)
+
+        VALUES (#{mgr_no}, #{borough}, #{wifi_no}, #{address1},
+                #{address2}, #{in_floor}, #{in_type}, #{in_by},
+                #{service}, #{network}, #{c_year}, #{in_out},
+                #{r_connection}, #{lat}, #{lnt}, #{work_date})
     </insert>
 
-
+    <!--현재 내 위치 거리순으로 반환-->
     <select id="get_Wifi_Info" resultType="WifiDTO" parameterType="Map">
         SELECT *,
                ST_Distance_Sphere(point(lnt, lat), point(#{lnt}, #{lat}))
@@ -21,8 +29,24 @@
         LIMIT 20;
     </select>
 
+    <!--검색 기록 저장-->
     <insert id="saveHistory" parameterType="Map">
         INSERT INTO history (lat, lnt) VALUES (#{lat}, #{lnt});
+    </insert>
+
+    <!--검색기록 반환-->
+    <select id="getHistory" resultType="HistoryDTO">
+        select * from history
+    </select>
+
+    <!--검색기록 삭제-->
+    <delete id="deleteHistory" parameterType="long">
+        CALL delete_history(#{id})
+    </delete>
+
+    <!--새로운 순서대로 다시 저장-->
+    <insert id="insertHistory" parameterType="map">
+        CALL insert_history(#{lat}, #{lnt})
     </insert>
 
 </mapper>

@@ -50,7 +50,7 @@
 <div id="link-list">
     <a href="home">홈</a>
     &#124;
-    <a href="history">위치 히스토리 목록</a>
+    <a href="getHistory">위치 히스토리 목록</a>
     &#124;
     <a href="lode-wifi-data">Open API 와이파이 정보 가져오기</a>
     &#124;

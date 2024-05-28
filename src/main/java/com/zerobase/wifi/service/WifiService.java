@@ -1,5 +1,6 @@
 package com.zerobase.wifi.service;
 
+import com.zerobase.wifi.dto.HistoryDTO;
 import com.zerobase.wifi.dto.WifiDTO;
 import com.zerobase.wifi.mapper.WifiMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +16,37 @@ public class WifiService {
     @Autowired
     private WifiMapper wifiMapper;
 
+    // 와이파이 정보를 가지고 오는 메서드
     public List<WifiDTO> getList(double lat, double lnt) {
         Map<String, Double> map = new HashMap<>();
         map.put("lat", lat);
         map.put("lnt", lnt);
 
-        List<WifiDTO> list = wifiMapper.get_Wifi_Info(map);
-        wifiMapper.saveHistory(map);
-
-        for (WifiDTO dto : list) {
-            dto.setDistance(getDistance(lat, lnt, dto.getLat(), dto.getLnt()));
+        // wifiMapper.getHistory()이 비어 있는지 확인
+        if (wifiMapper.getHistory().isEmpty()) {
+            // 비어 있다면 바로 저장
+            wifiMapper.saveHistory(map);
+        } else {
+            // 비어 있지 않다면 프로시저를 통해 저장
+            wifiMapper.insertHistory(map);
         }
+
+        List<WifiDTO> list = wifiMapper.get_Wifi_Info(map);
         return list;
     }
 
+    // 검색 기록을 가지고 오는 메서드
+    public List<HistoryDTO> getHistory() {
+        return wifiMapper.getHistory();
+    }
+
+    // 검색 기록울 삭제하는 메서드
+    public List<HistoryDTO> deleteHistory(long id) {
+        wifiMapper.deleteHistory(id);
+        return wifiMapper.getHistory();
+    }
+
+    // 현재 좌표와 거리 비교할 좌표의 거리 구하는 메서드
     public String getDistance(double lat1, double lng1, double lat2, double lng2) {
         int radius = 6371;
         double dLat = Math.toRadians(lat2 - lat1);

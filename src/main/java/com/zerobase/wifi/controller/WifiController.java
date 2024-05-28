@@ -1,6 +1,8 @@
 package com.zerobase.wifi.controller;
 
 import java.util.*;
+
+import com.zerobase.wifi.dto.HistoryDTO;
 import com.zerobase.wifi.dto.WifiDTO;
 import com.zerobase.wifi.service.WifiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,22 +28,36 @@ public class WifiController {
         return "index";
     }
 
+
+    // 와아피이 기록 출력
     @PostMapping("/wifi-Info")
-    public String wifiInfo(@RequestParam("lat") double lat,
-                           @RequestParam("lnt") double lnt,
+    public String wifiInfo(@RequestParam double lat,
+                           @RequestParam double lnt,
                            Model model) {
 
         List<WifiDTO> list = wifiService.getList(lat, lnt);
-        for (WifiDTO wifi : list) {
-            System.out.println(wifi.getDistance());
-        }
-
         model.addAttribute("list", list);
         return "index";
     }
 
-    @GetMapping("/history")
-    public String history() {
+    // 기록 출력
+    @GetMapping("/getHistory")
+    public String history(Model model) {
+
+        List<HistoryDTO> list = wifiService.getHistory();
+        model.addAttribute("list", list);
+
         return "history";
+    }
+
+    // 기록 삭제
+    @GetMapping("/deleteHistory")
+    public String history(@RequestParam String id, Model model) {
+
+        List<HistoryDTO> list = wifiService.deleteHistory(Long.parseLong(id));
+        model.addAttribute("list", list);
+
+        return "history";
+
     }
 }
