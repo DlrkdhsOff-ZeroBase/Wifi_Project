@@ -1,4 +1,5 @@
-
+<%@ page import="com.zerobase.wifi.dto.BookMarkDTO" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -69,52 +70,56 @@
     </tr>
     </thead>
     <tbody>
-<%--    <%--%>
-<%--        BookmarkGroupDao bookmarkGroupDao = new BookmarkGroupDao();--%>
-<%--        if (bookmarkGroupDao.count() == 0) {--%>
-<%--    %>--%>
+    <%
+        List<BookMarkDTO> list = (List<BookMarkDTO>) request.getAttribute("list");
+        if (list != null && !list.isEmpty()) {
+            for (BookMarkDTO dto : list) {
+    %>
+    <tr>
+        <td>
+            <%= dto.getId() %>
+        </td>
+        <td>
+            <%= dto.getName() %>
+        </td>
+        <td>
+            <%= dto.getNo() %>
+        </td>
+        <td>
+            <%= dto.getInsertDate().toString() %>
+        </td>
+        <td>
+            <%= dto.getUpdateDate().toString() %>
+        </td>
+        <td>
+            <a href="bookmark-group-edit.jsp?id=<%= dto.getId() %>">
+                수정
+            </a>
+            <a href="bookmark-group-delete.jsp?id=<%= dto.getId() %>">
+                삭제
+            </a>
+        </td>
+    </tr>
+    <%
+        }
+    } else {
+    %>
     <tr>
         <td colspan="6">
             정보가 존재하지 않습니다.
         </td>
     </tr>
-<%--    <%--%>
-<%--    } else {--%>
-<%--        List<BookmarkGroupDto> bookmarkGroupDtoList = bookmarkGroupDao.selectList();--%>
-<%--        for (BookmarkGroupDto item : bookmarkGroupDtoList) {--%>
-<%--            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");--%>
-<%--            String regDate = sdf.format(item.getRegDttm());--%>
-<%--            String uptDate = item.getUptDttm() == null ? "" : sdf.format(item.getUptDttm());--%>
-<%--    %>--%>
-<%--    <tr>--%>
-<%--        <td>--%>
-<%--            <%= item.getId() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getName() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= item.getSeq() %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= regDate %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <%= uptDate %>--%>
-<%--        </td>--%>
-<%--        <td>--%>
-<%--            <a href="bookmark-group-edit.jsp?id=<%= item.getId() %>">--%>
-<%--                수정--%>
-<%--            </a>--%>
-<%--            <a href="bookmark-group-delete.jsp?id=<%= item.getId() %>">--%>
-<%--                삭제--%>
-<%--            </a>--%>
-<%--        </td>--%>
-<%--    </tr>--%>
-<%--    <%--%>
-<%--            }--%>
-<%--        }--%>
-<%--    %>--%>
+    <%
+        }
+    %>
+    <script type="text/javascript">
+        window.onload = function() {
+            var check = "<%= request.getAttribute("check") %>";
+            if (check === "true") {
+                alert("북마크 그룹 정보를 추가하였습니다");
+            }
+        };
+    </script>
     </tbody>
 </table>
 </body>

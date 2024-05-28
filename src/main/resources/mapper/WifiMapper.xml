@@ -8,12 +8,12 @@
 
     <!--와이파이 정보 저장-->
     <insert id="save" parameterType="WifiDTO">
-        INSERT INTO
+        insert into
             wifiAPI (mgr_no, borough, wifi_name, address1, address2,
                      in_floor, in_type, in_by, service, network,
                      c_year, in_out, r_connection, lat, lnt, work_date)
 
-        VALUES (#{mgr_no}, #{borough}, #{wifi_name}, #{address1},
+        values (#{mgr_no}, #{borough}, #{wifi_name}, #{address1},
                 #{address2}, #{in_floor}, #{in_type}, #{in_by},
                 #{service}, #{network}, #{c_year}, #{in_out},
                 #{r_connection}, #{lat}, #{lnt}, #{work_date})
@@ -21,12 +21,12 @@
 
     <!--현재 내 위치 거리순으로 반환-->
     <select id="get_Wifi_Info" resultType="WifiDTO" parameterType="Map">
-        SELECT *,
+        select *,
                ST_Distance_Sphere(point(lnt, lat), point(#{lnt}, #{lat}))
-                   AS distance
-        FROM wifiAPI
-        ORDER BY distance
-        LIMIT 20;
+                   as distance
+        from wifiAPI
+        order by distance
+        limit 20;
     </select>
 
 </mapper>

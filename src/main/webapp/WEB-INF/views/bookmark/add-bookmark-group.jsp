@@ -70,5 +70,17 @@
         </tr>
     </table>
 </form>
+
+<script type="text/javascript">
+    window.onload = function() {
+        var check = "<%= request.getAttribute("check") %>";
+        if (check === "empty") {
+            alert("입력하지 않은 부분이 있습니다 다시 입력해주세요.");
+        }else if (check === "no"){
+            alert("중복된 순서 입니다. 다시 입력해주세요.");
+        }
+    };
+</script>
+
 </body>
 </html>
