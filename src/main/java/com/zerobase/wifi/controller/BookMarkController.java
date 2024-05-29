@@ -27,9 +27,10 @@ public class BookMarkController {
     @Autowired
     private BookMarkService bookMarkService;
 
+
     @GetMapping("/detail")
     public String detail(HttpServletRequest request, Model model) {
-        String mgr_no = request.getParameter("mgr_no");
+       String mgr_no = request.getParameter("mgr_no");
         return getDetailData(request, model, mgr_no);
     }
 
@@ -116,6 +117,7 @@ public class BookMarkController {
             return "/bookmark/bookmark-group";
         } else {
             model.addAttribute("check", operationType + " false");
+            model.addAttribute("id", "");
             return failureUrl;
         }
     }
@@ -146,8 +148,12 @@ public class BookMarkController {
                 }
             }
         }
+
         List<BookMarkGroupDTO> list = bookMarkService.getBookMarkGroup();
-        model.addAttribute("list", list);
+        if (list != null) {
+            model.addAttribute("list", list);
+        }
+
         return "detail";
     }
 }

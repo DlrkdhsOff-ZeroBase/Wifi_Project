@@ -102,7 +102,7 @@
         <td><%= item.getDistance() %></td>
         <td><%= item.getMgr_no() %></td>
         <td><%= item.getBorough() %></td>
-        <td><a href="detail?mgr_no=<%= item.getMgr_no() %>&sessionId=<%= session.getId() %>">
+        <td><a href="detail?mgr_no=<%= item.getMgr_no() %>">
             <%= item.getWifi_name() %></a>
         </td>
         <td><%= item.getAddress1() %></td>

@@ -42,4 +42,8 @@
         delete from bookMark where id=#{id}
     </delete>
 
+    <select id="getDetail" parameterType="string" resultType="wifiDTO">
+        select * from wifiAPI where mgr_no=#{mgr_no}
+    </select>
+
 </mapper>

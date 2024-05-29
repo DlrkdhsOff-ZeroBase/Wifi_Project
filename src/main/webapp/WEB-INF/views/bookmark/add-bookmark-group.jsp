@@ -59,9 +59,10 @@
     } else {
         actionUrl = "add-bookmark-group";
         bt = "추가";
+        id = ""; // Ensure id is empty for add operation
     }
 %>
-<form id="bookmarkForm" action="<%= actionUrl %>" method="post"  onsubmit="return validateForm()">
+<form id="bookmarkForm" action="<%= actionUrl %>" method="post" onsubmit="return validateForm()">
     <table id="table-list">
         <tr>
             <th>북마크 이름</th>

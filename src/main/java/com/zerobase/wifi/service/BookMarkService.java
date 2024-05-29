@@ -3,6 +3,7 @@ package com.zerobase.wifi.service;
 
 import com.zerobase.wifi.dto.BookMarkDTO;
 import com.zerobase.wifi.dto.BookMarkGroupDTO;
+import com.zerobase.wifi.dto.WifiDTO;
 import com.zerobase.wifi.mapper.BookMarkMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -90,5 +91,9 @@ public class BookMarkService {
         } catch (DataIntegrityViolationException e) {
             return "fail";
         }
+    }
+
+    public WifiDTO getDetail(String mgr_no) {
+        return bookMarkMapper.getDetail(mgr_no);
     }
 }
