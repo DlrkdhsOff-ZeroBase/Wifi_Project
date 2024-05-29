@@ -44,7 +44,7 @@
     &#124;
     <a href="lode-wifi-data">Open API 와이파이 정보 가져오기</a>
     &#124;
-    <a href="bookmark-list.jsp">북마크 보기</a>
+    <a href="bookmark-list">북마크 보기</a>
     &#124;
     <a href="bookmark-group">북마크 그룹 관리</a>
 </div>

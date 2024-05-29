@@ -1,4 +1,6 @@
 <%@ page import="com.zerobase.wifi.dto.WifiDTO" %>
+<%@ page import="com.zerobase.wifi.dto.BookMarkGroupDTO" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -55,130 +57,131 @@
     &#124;
     <a href="lode-wifi-data">Open API 와이파이 정보 가져오기</a>
     &#124;
-    <a href="bookmark-list.jsp">북마크 보기</a>
+    <a href="bookmark-list">북마크 보기</a>
     &#124;
     <a href="bookmark-group">북마크 그룹 관리</a>
 </div>
 
-<%--<%--%>
-<%--    String mgrNo = request.getParameter("mgrNo");--%>
-<%--    String dist = request.getParameter("dist");--%>
-
-<%--    WifiDao wifiDao = new WifiDao();--%>
-<%--    WifiDto wifiDto = wifiDao.select(mgrNo);--%>
-
-<%--    BookmarkGroupDao bookmarkGroupDao = new BookmarkGroupDao();--%>
-<%--    List<BookmarkGroupDto> bookmarkGroupDtoList = bookmarkGroupDao.selectList();--%>
-<%--%>--%>
-
-<%--<div id="bookmark-list">--%>
-<%--    <form action="bookmark-add-submit.jsp" method="post" id="bookmark-form">--%>
-<%--        <select name="gid">--%>
-<%--            <option value="none" selected>북마크 그룹 이름 선택</option>--%>
-<%--            <%--%>
-<%--                for (BookmarkGroupDto item : bookmarkGroupDtoList) {--%>
-<%--            %>--%>
-<%--            <option value="<%= item.getId() %>">--%>
-<%--                <%= item.getName() %>--%>
-<%--            </option>--%>
-<%--            <%--%>
-<%--                }--%>
-<%--            %>--%>
-<%--        </select>--%>
-
-<%--        <input type="submit" value="즐겨찾기 추가하기">--%>
-<%--        <input type="hidden" name="mgrNo" value="<%= mgrNo %>">--%>
-<%--    </form>--%>
-<%--</div>--%>
-
 <%
-    WifiDTO dto = (WifiDTO) request.getAttribute("wifi");
+    List<BookMarkGroupDTO> list = (List<BookMarkGroupDTO>) request.getAttribute("list");
+    WifiDTO wifiDTO = (WifiDTO) request.getAttribute("wifi");
 %>
+
+<div id="bookmark-list">
+    <form action="add-bookmark" method="post" id="bookmark-form">
+        <select name="name">
+            <option value="none" selected>북마크 그룹 이름 선택</option>
+            <%
+                for (BookMarkGroupDTO dto : list) {
+            %>
+            <option value="<%= dto.getName() %>">
+                <%= dto.getName() %>
+            </option>
+            <%
+                }
+            %>
+        </select>
+
+        <input type="submit" value="북마크 추가하기">
+        <input type="hidden" name="mgr_no" value="<%= wifiDTO.getMgr_no() %>">
+        <input type="hidden" name="wifi_name" value="<%= wifiDTO.getWifi_name() %>">
+    </form>
+</div>
 <table id="table-list">
     <tr>
         <th>거리(Km)</th>
-        <td><%= dto.getDistance() %>
+        <td><%= wifiDTO.getDistance() %>
         </td>
     </tr>
     <tr>
         <th>관리번호</th>
-        <td><%= dto.getMgr_no() %>
+        <td><%= wifiDTO.getMgr_no() %>
         </td>
     </tr>
     <tr>
         <th>자치구</th>
-        <td><%= dto.getBorough() %>
+        <td><%= wifiDTO.getBorough() %>
         </td>
     </tr>
     <tr>
         <th>와이파이명</th>
-        <td><%= dto.getWifi_name() %>
+        <td><%= wifiDTO.getWifi_name() %>
         </td>
     </tr>
     <tr>
         <th>도로명주소</th>
-        <td><%= dto.getAddress1() %>
+        <td><%= wifiDTO.getAddress1() %>
         </td>
     </tr>
     <tr>
         <th>상세주소</th>
-        <td><%= dto.getAddress2() %>
+        <td><%= wifiDTO.getAddress2() %>
         </td>
     </tr>
     <tr>
         <th>설치위치(층)</th>
-        <td><%= dto.getIn_floor() %>
+        <td><%= wifiDTO.getIn_floor() %>
         </td>
     </tr>
     <tr>
         <th>설치유형</th>
-        <td><%= dto.getIn_type() %>
+        <td><%= wifiDTO.getIn_type() %>
         </td>
     </tr>
     <tr>
         <th>설치기관</th>
-        <td><%= dto.getIn_by() %>
+        <td><%= wifiDTO.getIn_by() %>
         </td>
     </tr>
     <tr>
         <th>서비스구분</th>
-        <td><%= dto.getService() %>
+        <td><%= wifiDTO.getService() %>
         </td>
     </tr>
     <tr>
         <th>망종류</th>
-        <td><%= dto.getNetwork() %>
+        <td><%= wifiDTO.getNetwork() %>
         </td>
     </tr>
     <tr>
         <th>설치년도</th>
-        <td><%= dto.getC_year() %>
+        <td><%= wifiDTO.getC_year() %>
         </td>
     </tr>
     <tr>
         <th>실내외구분</th>
-        <td><%= dto.getIn_out() %>
+        <td><%= wifiDTO.getIn_out() %>
         </td>
     </tr>
     <tr>
         <th>WIFI접속환경</th>
-        <td><%= dto.getR_connection() %>
+        <td><%= wifiDTO.getR_connection() %>
         </td>
     </tr>
     <tr>
         <th>X좌표</th>
-        <td><%= dto.getLnt() %>
+        <td><%= wifiDTO.getLnt() %>
         </td>
     </tr>
     <tr>
         <th>Y좌표</th>
-        <td><%= dto.getLat() %>
+        <td><%= wifiDTO.getLat() %>
         </td>
     </tr>
     <tr>
         <th>작업일자</th>
-        <td><%= dto.getWork_date() %>
+        <td><%= wifiDTO.getWork_date() %>
         </td>
     </tr>
 </table>
+<script type="text/javascript">
+    window.onload = function() {
+        const check = "<%= request.getAttribute("check") %>";
+        if (check === "fail") {
+            alert("북마크 추가에 실해 했습니다. 다시 시도 해주세요.");
+        } else if(check === "add false"){
+            alert("북마크 이름을 선택해주세요.");
+        }
+    };
+</script>
 </body>

@@ -8,20 +8,38 @@
 
     <!--북마크 저장-->
     <insert id="insertBookMark" parameterType="Map">
-        insert into bookmarks (name, no) values (#{name}, #{no});
+        insert into bookMarkGroup (name, no) values (#{name}, #{no});
     </insert>
 
-    <select id="getBookMarkList" resultType="BookMarkDTO">
-        select * from bookmarks
+    <!--북마크 목록-->
+    <select id="getBookMarkList" resultType="BookMarkGroupDTO">
+        select * from bookMarkGroup
     </select>
 
+    <!--북마크 수정-->
     <update id="updateBookMark" parameterType="map">
-        update bookmarks set name=#{name}, no=#{no}
+        update bookMarkGroup set name=#{name}, no=#{no}
         where id =#{id}
     </update>
 
+    <!--북마크 삭제-->
+    <delete id="deleteBookMarkGroup" parameterType="long">
+        delete from bookMarkGroup where id=#{id}
+    </delete>
+
+    <!--북마크 등록-->
+    <insert id="addBookMark" parameterType="map">
+        insert into bookmark (bookMarkName, wifi_name) values (#{name}, #{wifi_name});
+    </insert>
+
+    <!--등록한 북마크 목록-->
+    <select id="getBookMark" resultType="bookMarkDTO">
+        select * from bookmark
+    </select>
+
+    <!--등록한 북마크 삭제-->
     <delete id="deleteBookMark" parameterType="long">
-        delete from bookmarks where id=#{id}
+        delete from bookMark where id=#{id}
     </delete>
 
 </mapper>

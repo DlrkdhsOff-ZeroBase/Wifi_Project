@@ -1,4 +1,4 @@
-<%@ page import="com.zerobase.wifi.dto.BookMarkDTO" %>
+<%@ page import="com.zerobase.wifi.dto.BookMarkGroupDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -49,7 +49,7 @@
     &#124;
     <a href="lode-wifi-data">Open API 와이파이 정보 가져오기</a>
     &#124;
-    <a href="bookmark-list.jsp">북마크 보기</a>
+    <a href="bookmark-list">북마크 보기</a>
     &#124;
     <a href="bookmark-group">북마크 그룹 관리</a>
 </div>
@@ -71,9 +71,9 @@
     </thead>
     <tbody>
     <%
-        List<BookMarkDTO> list = (List<BookMarkDTO>) request.getAttribute("list");
+        List<BookMarkGroupDTO> list = (List<BookMarkGroupDTO>) request.getAttribute("list");
         if (list != null && !list.isEmpty()) {
-            for (BookMarkDTO dto : list) {
+            for (BookMarkGroupDTO dto : list) {
     %>
     <tr>
         <td>
@@ -118,7 +118,7 @@
             if (check === "insert success") {
                 alert("북마크 그룹 정보를 추가하였습니다.");
             }else if (check === "update success") {
-                alert("수정을 성공하였습니다.");
+                alert("북마크 수정을 성공하였습니다.");
             }else if (check === "delete success") {
                 alert("삭제 성공하였습니다.")
             }

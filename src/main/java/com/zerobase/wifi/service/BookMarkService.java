@@ -2,6 +2,7 @@ package com.zerobase.wifi.service;
 
 
 import com.zerobase.wifi.dto.BookMarkDTO;
+import com.zerobase.wifi.dto.BookMarkGroupDTO;
 import com.zerobase.wifi.mapper.BookMarkMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,7 +19,7 @@ public class BookMarkService {
     private BookMarkMapper bookMarkMapper;
 
 
-    // 북마크 추가
+    // 북마크 그룹 추가
     public String insertBookMark(String name, int no) {
         try {
             Map<String , Object> map = new HashMap<>();
@@ -31,12 +32,12 @@ public class BookMarkService {
         }
     }
 
-    // 북마크 목록
-    public List<BookMarkDTO> getBookMark() {
+    // 북마크 그룹 목록
+    public List<BookMarkGroupDTO> getBookMarkGroup() {
         return bookMarkMapper.getBookMarkList();
     }
 
-    // 북마크 수정
+    // 북마크 그룹 수정
     public String updateBookMark(long id, String name, int no) {
         try {
             Map<String , Object> map = new HashMap<>();
@@ -50,9 +51,39 @@ public class BookMarkService {
         }
     }
 
-    // 북마크 삭제
+    // 북마크 그룹 삭제
+    public String deleteBookMarkGroup(String id) {
+        bookMarkMapper.deleteBookMarkGroup(Long.parseLong(id));
+        try {
+            bookMarkMapper.deleteBookMarkGroup(Long.parseLong(id));
+            return "success";
+        } catch (DataIntegrityViolationException e) {
+            return "fail";
+        }
+    }
+
+    // 북마크 등록
+    public String addBookMark(String name, String wifi_name) {
+
+        try {
+            Map<String , Object> map = new HashMap<>();
+            map.put("name", name);
+            map.put("wifi_name", wifi_name);
+            bookMarkMapper.addBookMark(map);
+            return "success";
+        } catch (DataIntegrityViolationException e) {
+            return "fail";
+        }
+    }
+
+    // 등록한 북마크 목록
+    public List<BookMarkDTO> getBookMark() {
+        return bookMarkMapper.getBookMark();
+    }
+
+
+    // 등록한 북마크 삭제
     public String deleteBookMark(String id) {
-        bookMarkMapper.deleteBookMark(Long.parseLong(id));
         try {
             bookMarkMapper.deleteBookMark(Long.parseLong(id));
             return "success";
