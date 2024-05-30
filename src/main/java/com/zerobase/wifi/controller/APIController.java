@@ -50,9 +50,7 @@ public class APIController {
                 end = end + 1000;
 
                 // end 값이 maxData를 초과하지 않도록 조정
-                if (end > maxData) {
-                    end = maxData;
-                }
+                end = Math.min(end, maxData);
             }
             model.addAttribute("totalFetched", totalFetched);
         } catch (Exception e) {
@@ -87,8 +85,8 @@ public class APIController {
 
     private String sendRequest(int start, int end) throws Exception {
 
-        String urlBuilder = "http://openapi.seoul.go.kr:8088" + "/" +
-                URLEncoder.encode("62565469726b616f37346a5343494c", StandardCharsets.UTF_8) +
+        String urlBuilder = "http://openapi.seoul.go.kr:8088" +
+                "/" + URLEncoder.encode("62565469726b616f37346a5343494c", StandardCharsets.UTF_8) +
                 "/" + URLEncoder.encode("xml", StandardCharsets.UTF_8) +
                 "/" + URLEncoder.encode("TbPublicWifiInfo", StandardCharsets.UTF_8) +
                 "/" + URLEncoder.encode(String.valueOf(start), StandardCharsets.UTF_8) +
