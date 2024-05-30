@@ -30,7 +30,7 @@ public class BookMarkController {
 
     @GetMapping("/detail")
     public String detail(HttpServletRequest request, Model model) {
-       String mgr_no = request.getParameter("mgr_no");
+        String mgr_no = request.getParameter("mgr_no");
         return getDetailData(request, model, mgr_no);
     }
 
