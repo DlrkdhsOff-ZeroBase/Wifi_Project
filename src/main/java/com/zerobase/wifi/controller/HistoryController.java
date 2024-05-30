@@ -20,8 +20,8 @@ public class HistoryController {
     @GetMapping("/getHistory")
     public String history(Model model) {
 
-        List<HistoryDTO> list = historyService.getHistory();
-        model.addAttribute("list", list);
+        List<HistoryDTO> HistoryList = historyService.getHistory();
+        model.addAttribute("HistoryList", HistoryList);
 
         return "history";
     }
@@ -30,8 +30,8 @@ public class HistoryController {
     @GetMapping("/deleteHistory")
     public String history(@RequestParam String id, Model model) {
 
-        List<HistoryDTO> list = historyService.deleteHistory(Long.parseLong(id));
-        model.addAttribute("list", list);
+        List<HistoryDTO> HistoryList = historyService.deleteHistory(Long.parseLong(id));
+        model.addAttribute("HistoryList", HistoryList);
 
         return "history";
 

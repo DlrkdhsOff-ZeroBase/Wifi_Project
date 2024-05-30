@@ -9,4 +9,5 @@ public class BookMarkGroupDTO {
     private int no;
     private String insertDate;
     private String updateDate;
+
 }

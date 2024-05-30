@@ -1,4 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>와이파이 정보 구하기</title>
@@ -49,20 +51,20 @@
     <a href="bookmark-group">북마크 그룹 관리</a>
 </div>
 
-<%
-    String id = request.getParameter("id");
-    String actionUrl;
-    String bt;
-    if (id != null && !id.isEmpty()) {
-        actionUrl = "update-bookmark-group";
-        bt = "수정";
-    } else {
-        actionUrl = "add-bookmark-group";
-        bt = "추가";
-        id = ""; // Ensure id is empty for add operation
-    }
-%>
-<form id="bookmarkForm" action="<%= actionUrl %>" method="post" onsubmit="return validateForm()">
+<c:set var="id" value="${param.id}" />
+<c:choose>
+    <c:when test="${not empty id}">
+        <c:set var="actionUrl" value="update-bookmark-group" />
+        <c:set var="bt" value="수정" />
+    </c:when>
+    <c:otherwise>
+        <c:set var="actionUrl" value="add-bookmark-group" />
+        <c:set var="bt" value="추가" />
+        <c:set var="id" value="" />
+    </c:otherwise>
+</c:choose>
+
+<form id="bookmarkForm" action="${actionUrl}" method="post" onsubmit="return validateForm()">
     <table id="table-list">
         <tr>
             <th>북마크 이름</th>
@@ -78,11 +80,11 @@
         </tr>
         <tr>
             <td colspan="2" style="text-align: center;">
-                <input type="submit" value="<%= bt %>">
+                <input type="submit" value="${bt}">
             </td>
         </tr>
     </table>
-    <input type="hidden" name="id" value="<%= id %>">
+    <input type="hidden" name="id" value="${id}">
 </form>
 
 <script type="text/javascript">
@@ -105,7 +107,7 @@
     }
 
     window.onload = function() {
-        const check = "<%= request.getAttribute("check") %>";
+        const check = "<%=request.getAttribute("check")%>";
         if (check === "insert false") {
             alert("중복된 값이 있습니다. 다시 입력해주세요.");
         }else if (check === "update false") {

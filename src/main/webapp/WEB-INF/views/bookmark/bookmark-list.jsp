@@ -1,6 +1,6 @@
-<%@ page import="com.zerobase.wifi.dto.BookMarkDTO" %>
-<%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>와이파이 정보 구하기</title>
@@ -65,55 +65,40 @@
     </tr>
     </thead>
     <tbody>
-    <%
-        List<BookMarkDTO> list = (List<BookMarkDTO>) request.getAttribute("list");
-        if (list != null && !list.isEmpty()) {
-            for (BookMarkDTO dto : list) {
-    %>
-    <tr>
-        <td>
-            <%= dto.getId() %>
-        </td>
-        <td>
-            <%= dto.getBookMarkName() %>
-        </td>
-        <td>
-            <%= dto.getWifi_name() %>
-        </td>
-        <td>
-            <%= dto.getDate() %>
-        </td>
-        <td>
-            <a href="delete-bookmark?id=<%= dto.getId() %>">
-                삭제
-            </a>
-        </td>
-    </tr>
-    <%
-        }
-    } else {
-    %>
-    <tr>
-        <td colspan="6">
-            정보가 존재하지 않습니다.
-        </td>
-    </tr>
-    <%
-        }
-    %>
-    <script type="text/javascript">
-        window.onload = function() {
-            const check = "<%= request.getAttribute("check") %>";
-            if (check === "add success") {
-                alert("북마크를 추가하였습니다.");
-            }else if (check === "delete success") {
-                alert("북마크를 삭제했습니다.");
-            }else if (check === "delete success") {
-                alert("삭제 성공하였습니다.")
-            }
-        };
-    </script>
+    <c:choose>
+        <c:when test="${not empty bookMarkList}">
+            <c:forEach var="dto" items="${bookMarkList}">
+                <tr>
+                    <td>${dto.id}</td>
+                    <td>${dto.bookMarkName}</td>
+                    <td>${dto.wifi_name}</td>
+                    <td>${dto.date}</td>
+                    <td>
+                        <a href="delete-bookmark?id=${dto.id}">삭제</a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <tr>
+                <td colspan="6">정보가 존재하지 않습니다.</td>
+            </tr>
+        </c:otherwise>
+    </c:choose>
     </tbody>
 </table>
+
+<script type="text/javascript">
+    window.onload = function() {
+        const check = "<%=request.getAttribute("check")%>";
+        if (check === "add success") {
+            alert("북마크를 추가하였습니다.");
+        } else if (check === "delete success") {
+            alert("북마크를 삭제했습니다.");
+        } else if (check === "delete success") {
+            alert("삭제 성공하였습니다.");
+        }
+    };
+</script>
 </body>
 </html>

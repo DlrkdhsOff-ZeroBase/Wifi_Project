@@ -4,8 +4,6 @@ import com.zerobase.wifi.dto.BookMarkDTO;
 import com.zerobase.wifi.dto.BookMarkGroupDTO;
 import com.zerobase.wifi.dto.WifiDTO;
 import com.zerobase.wifi.service.BookMarkService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +27,15 @@ public class BookMarkController {
 
 
     @GetMapping("/detail")
-    public String detail(HttpServletRequest request, Model model) {
-        String mgr_no = request.getParameter("mgr_no");
-        return getDetailData(request, model, mgr_no);
+    public String detail(@RequestParam String mgr_no, Model model) {
+        return getDetailData(model, mgr_no);
     }
 
     // 북마크 그룹 정보 가지고 오기
     @GetMapping("/bookmark-group")
     public String bookmarkGroup(Model model) {
-        List<BookMarkGroupDTO> list = bookMarkService.getBookMarkGroup();
-        model.addAttribute("list", list);
+        List<BookMarkGroupDTO> bookMarkGroupList = bookMarkService.getBookMarkGroup();
+        model.addAttribute("bookMarkGroupList", bookMarkGroupList);
         return "/bookmark/bookmark-group";
     }
 
@@ -51,7 +48,7 @@ public class BookMarkController {
     // 북마크 그룹 추가
     @PostMapping("/add-bookmark-group")
     public String saveBookmarkGroup(@RequestParam String bookMarkName, @RequestParam String no, Model model) {
-        log.info("bookMarkName : {}", bookMarkName);
+
         String result = bookMarkService.insertBookMark(bookMarkName, Integer.parseInt(no));
         return BookMarkGroupResult(result, "insert", model,  "/bookmark/add-bookmark-group");
     }
@@ -81,11 +78,11 @@ public class BookMarkController {
     // 북마크 등록
     @PostMapping("/add-bookmark")
     public String addBookmark(@RequestParam String bookMarkName, @RequestParam String mgr_no,
-                              @RequestParam String wifi_name, HttpServletRequest request, Model model) {
+                              @RequestParam String wifi_name, Model model) {
 
         if (Objects.equals(bookMarkName, "none")) {
             model.addAttribute("check", "add" + " false");
-            return getDetailData(request, model, mgr_no);
+            return getDetailData(model, mgr_no);
         } else {
             int no = bookMarkService.getNo(bookMarkName);
             String result = bookMarkService.addBookMark(bookMarkName, no, wifi_name);
@@ -103,8 +100,8 @@ public class BookMarkController {
     // 북마크 목록
     @GetMapping("/bookmark-list")
     public String bookmarkList(Model model) {
-        List<BookMarkDTO> list = bookMarkService.getBookMark();
-        model.addAttribute("list", list);
+        List<BookMarkDTO> bookMarkList = bookMarkService.getBookMark();
+        model.addAttribute("bookMarkList", bookMarkList);
         return "/bookmark/bookmark-list";
     }
 
@@ -113,9 +110,9 @@ public class BookMarkController {
     // 북마크 그룹 (추가/수정/삭제) 후 데이터를 가지고 오는 메서드
     private String BookMarkGroupResult(String result, String operationType, Model model, String failureUrl) {
         if ("success".equals(result)) {
-            List<BookMarkGroupDTO> list = bookMarkService.getBookMarkGroup();
+            List<BookMarkGroupDTO> bookMarkGroupList = bookMarkService.getBookMarkGroup();
             model.addAttribute("check", operationType + " success");
-            model.addAttribute("list", list);
+            model.addAttribute("bookMarkGroupList", bookMarkGroupList);
             return "/bookmark/bookmark-group";
         } else {
             model.addAttribute("check", operationType + " false");
@@ -127,9 +124,9 @@ public class BookMarkController {
     // 북마크 (등록, 삭제) 후 데이터를 가지고 오는 메서드
     private String BookMarkResult(String result, String operationType, String failureUrl, Model model) {
         if ("success".equals(result)) {
-            List<BookMarkDTO> list = bookMarkService.getBookMark();
+            List<BookMarkDTO> bookMarkList = bookMarkService.getBookMark();
             model.addAttribute("check", operationType + " success");
-            model.addAttribute("list", list);
+            model.addAttribute("bookMarkList", bookMarkList);
             return "/bookmark/bookmark-list";
         } else {
             model.addAttribute("check", operationType + " false");
@@ -138,22 +135,13 @@ public class BookMarkController {
     }
 
     // 관리번호에 해당하는 dto객체를 detail.jsp파일에 전달
-    private String getDetailData(HttpServletRequest request, Model model, String mgr_no) {
-        HttpSession session = request.getSession();
-        List<WifiDTO> wifiList = (List<WifiDTO>) session.getAttribute("wifiList");
+    private String getDetailData(Model model, String mgr_no) {
+        WifiDTO wifiInfoDetail = bookMarkService.getDetail(mgr_no);
+        model.addAttribute("wifiInfoDetail", wifiInfoDetail);
 
-        if (wifiList != null) {
-            for (WifiDTO wifi : wifiList) {
-                if (wifi.getMgr_no().equals(mgr_no)) {
-                    model.addAttribute("wifi", wifi);
-                    break;
-                }
-            }
-        }
-
-        List<BookMarkGroupDTO> list = bookMarkService.getBookMarkGroup();
-        if (list != null) {
-            model.addAttribute("list", list);
+        List<BookMarkGroupDTO> bookMarkGroupList = bookMarkService.getBookMarkGroup();
+        if (bookMarkGroupList != null) {
+            model.addAttribute("bookMarkGroupList", bookMarkGroupList);
         }
 
         return "detail";

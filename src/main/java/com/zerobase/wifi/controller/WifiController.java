@@ -5,11 +5,11 @@ import java.util.*;
 import com.zerobase.wifi.dto.WifiDTO;
 import com.zerobase.wifi.service.WifiService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,13 +37,12 @@ public class WifiController {
     @PostMapping("/wifi-Info")
     public String wifiInfo(@RequestParam double lat,
                            @RequestParam double lnt,
-                           HttpServletRequest request) {
+                           Model model) {
 
         log.info("lat = {}, lnt = {}", lat, lnt);
 
-        List<WifiDTO> list = wifiService.getList(lat, lnt);
-        HttpSession session = request.getSession();
-        session.setAttribute("wifiList", list);
+        List<WifiDTO> wifiInfoList = wifiService.getList(lat, lnt);
+        model.addAttribute("wifiInfoList", wifiInfoList);
         return "index";
     }
 }

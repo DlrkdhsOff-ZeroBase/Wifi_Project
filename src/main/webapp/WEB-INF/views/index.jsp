@@ -1,6 +1,5 @@
-<%@ page import="com.zerobase.wifi.dto.WifiDTO" %>
-<%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,42 +92,36 @@
     </tr>
     </thead>
     <tbody>
-    <%
-        List<WifiDTO> list = (List<WifiDTO>) session.getAttribute("wifiList");
-        if (list != null && !list.isEmpty()) {
-            for (WifiDTO item : list) {
-    %>
-    <tr>
-        <td><%= item.getDistance() %></td>
-        <td><%= item.getMgr_no() %></td>
-        <td><%= item.getBorough() %></td>
-        <td><a href="detail?mgr_no=<%= item.getMgr_no() %>">
-            <%= item.getWifi_name() %></a>
-        </td>
-        <td><%= item.getAddress1() %></td>
-        <td><%= item.getAddress2() %></td>
-        <td><%= item.getIn_floor() %></td>
-        <td><%= item.getIn_type() %></td>
-        <td><%= item.getIn_by() %></td>
-        <td><%= item.getService() %></td>
-        <td><%= item.getNetwork() %></td>
-        <td><%= item.getC_year() %></td>
-        <td><%= item.getIn_out() %></td>
-        <td><%= item.getR_connection() %></td>
-        <td><%= item.getLat() %></td>
-        <td><%= item.getLnt() %></td>
-        <td><%= item.getWork_date() %></td>
-    </tr>
-    <%
-        }
-    } else {
-    %>
-    <tr>
-        <td colspan="17">위치 정보를 입력한 후에 조회해 주세요.</td>
-    </tr>
-    <%
-        }
-    %>
+    <c:choose>
+        <c:when test="${not empty wifiInfoList}">
+            <c:forEach var="item" items="${wifiInfoList}">
+                <tr>
+                    <td>${item.distance}</td>
+                    <td>${item.mgr_no}</td>
+                    <td>${item.borough}</td>
+                    <td><a href="detail?mgr_no=${item.mgr_no}">${item.wifi_name}</a></td>
+                    <td>${item.address1}</td>
+                    <td>${item.address2}</td>
+                    <td>${item.in_floor}</td>
+                    <td>${item.in_type}</td>
+                    <td>${item.in_by}</td>
+                    <td>${item.service}</td>
+                    <td>${item.network}</td>
+                    <td>${item.c_year}</td>
+                    <td>${item.in_out}</td>
+                    <td>${item.r_connection}</td>
+                    <td>${item.lat}</td>
+                    <td>${item.lnt}</td>
+                    <td>${item.work_date}</td>
+                </tr>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <tr>
+                <td colspan="17">위치 정보를 입력한 후에 조회해 주세요.</td>
+            </tr>
+        </c:otherwise>
+    </c:choose>
     </tbody>
 </table>
 

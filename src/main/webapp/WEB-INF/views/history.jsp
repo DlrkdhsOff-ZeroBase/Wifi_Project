@@ -1,6 +1,5 @@
-<%@ page import="com.zerobase.wifi.dto.HistoryDTO" %>
-<%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>와이파이 정보 구하기</title>
@@ -65,24 +64,26 @@
     </tr>
     </thead>
     <tbody>
-    <%
-        List<HistoryDTO> list = (List<HistoryDTO>) request.getAttribute("list");
-        if (list != null && !list.isEmpty()) {
-            for (HistoryDTO item : list) {
-    %>
-    <tr>
-        <td><%= item.getId() %></td>
-        <td><%= item.getLat() %></td>
-        <td><%= item.getLnt() %></td>
-        <td><%= item.getDate() %></td>
-        <td>
-            <button onclick="deleteId(<%= item.getId() %>);">삭제</button>
-        </td>
-    </tr>
-    <%
-        }
-    }
-    %>
+    <c:choose>
+        <c:when test="${not empty HistoryList}">
+            <c:forEach var="dto" items="${HistoryList}">
+                <tr>
+                    <td>${dto.id}</td>
+                    <td>${dto.lat}</td>
+                    <td>${dto.lnt}</td>
+                    <td>${dto.date}</td>
+                    <td>
+                        <button onclick="deleteId(${dto.id});">삭제</button>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <tr>
+                <td colspan="5">조회할 위치 히스토리가 없습니다.</td>
+            </tr>
+        </c:otherwise>
+    </c:choose>
     </tbody>
 </table>
 
