@@ -30,8 +30,8 @@ public class HistoryController {
     @GetMapping("/deleteHistory")
     public String history(@RequestParam String id, Model model) {
 
-        List<HistoryDTO> HistoryList = historyService.deleteHistory(Long.parseLong(id));
-        model.addAttribute("HistoryList", HistoryList);
+        List<HistoryDTO> historyList = historyService.deleteHistory(Long.parseLong(id));
+        model.addAttribute("historyList", historyList);
 
         return "history";
 
