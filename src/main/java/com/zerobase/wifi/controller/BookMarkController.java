@@ -50,8 +50,9 @@ public class BookMarkController {
 
     // 북마크 그룹 추가
     @PostMapping("/add-bookmark-group")
-    public String saveBookmarkGroup(@RequestParam String name, @RequestParam String no, Model model) {
-        String result = bookMarkService.insertBookMark(name, Integer.parseInt(no));
+    public String saveBookmarkGroup(@RequestParam String bookMarkName, @RequestParam String no, Model model) {
+        log.info("bookMarkName : {}", bookMarkName);
+        String result = bookMarkService.insertBookMark(bookMarkName, Integer.parseInt(no));
         return BookMarkGroupResult(result, "insert", model,  "/bookmark/add-bookmark-group");
     }
 
@@ -64,8 +65,8 @@ public class BookMarkController {
 
     // 북마크 그룹 수정
     @PostMapping("/update-bookmark-group")
-    public String updateBookmarkGroup(@RequestParam String id, @RequestParam String name, @RequestParam String no, Model model) {
-        String result = bookMarkService.updateBookMark(Long.parseLong(id), name, Integer.parseInt(no));
+    public String updateBookmarkGroup(@RequestParam String id, @RequestParam String bookMarkName, @RequestParam String no, Model model) {
+        String result = bookMarkService.updateBookMark(Long.parseLong(id), bookMarkName, Integer.parseInt(no));
         return BookMarkGroupResult(result, "update", model, "/bookmark/add-bookmark-group");
     }
 
@@ -79,14 +80,15 @@ public class BookMarkController {
 
     // 북마크 등록
     @PostMapping("/add-bookmark")
-    public String addBookmark(@RequestParam String name, @RequestParam String mgr_no,
+    public String addBookmark(@RequestParam String bookMarkName, @RequestParam String mgr_no,
                               @RequestParam String wifi_name, HttpServletRequest request, Model model) {
 
-        if (Objects.equals(name, "none")) {
+        if (Objects.equals(bookMarkName, "none")) {
             model.addAttribute("check", "add" + " false");
             return getDetailData(request, model, mgr_no);
         } else {
-            String result = bookMarkService.addBookMark(name, wifi_name);
+            int no = bookMarkService.getNo(bookMarkName);
+            String result = bookMarkService.addBookMark(bookMarkName, no, wifi_name);
             return BookMarkResult(result, "add", "detail", model);
         }
     }

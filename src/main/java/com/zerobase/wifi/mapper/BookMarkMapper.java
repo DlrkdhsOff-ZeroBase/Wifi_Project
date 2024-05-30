@@ -11,6 +11,8 @@ import java.util.Map;
 @Mapper
 public interface BookMarkMapper {
 
+
+
     void insertBookMark(Map<String, Object> map);
 
     List<BookMarkGroupDTO> getBookMarkList();
@@ -19,7 +21,6 @@ public interface BookMarkMapper {
 
     void deleteBookMarkGroup(long id);
 
-
     void addBookMark(Map<String, Object> map);
 
     List<BookMarkDTO> getBookMark();
@@ -27,4 +28,6 @@ public interface BookMarkMapper {
     void deleteBookMark(long id);
 
     WifiDTO getDetail(String mgr_no);
+
+    int getNo(String bookMarkName);
 }

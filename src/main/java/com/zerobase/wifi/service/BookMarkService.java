@@ -21,10 +21,10 @@ public class BookMarkService {
 
 
     // 북마크 그룹 추가
-    public String insertBookMark(String name, int no) {
+    public String insertBookMark(String bookMarkName, int no) {
         try {
             Map<String , Object> map = new HashMap<>();
-            map.put("name", name);
+            map.put("bookMarkName", bookMarkName);
             map.put("no", no);
             bookMarkMapper.insertBookMark(map);
             return "success";
@@ -39,11 +39,11 @@ public class BookMarkService {
     }
 
     // 북마크 그룹 수정
-    public String updateBookMark(long id, String name, int no) {
+    public String updateBookMark(long id, String bookMarkName, int no) {
         try {
             Map<String , Object> map = new HashMap<>();
             map.put("id", id);
-            map.put("name", name);
+            map.put("bookMarkName", bookMarkName);
             map.put("no", no);
             bookMarkMapper.updateBookMark(map);
             return "success";
@@ -64,11 +64,12 @@ public class BookMarkService {
     }
 
     // 북마크 등록
-    public String addBookMark(String name, String wifi_name) {
+    public String addBookMark(String bookMarkName, int no, String wifi_name) {
 
         try {
             Map<String , Object> map = new HashMap<>();
-            map.put("name", name);
+            map.put("bookMarkName", bookMarkName);
+            map.put("no", no);
             map.put("wifi_name", wifi_name);
             bookMarkMapper.addBookMark(map);
             return "success";
@@ -95,5 +96,9 @@ public class BookMarkService {
 
     public WifiDTO getDetail(String mgr_no) {
         return bookMarkMapper.getDetail(mgr_no);
+    }
+
+    public int getNo(String bookMarkName) {
+        return bookMarkMapper.getNo(bookMarkName);
     }
 }
