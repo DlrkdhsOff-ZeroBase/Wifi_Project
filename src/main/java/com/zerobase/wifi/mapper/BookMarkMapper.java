@@ -1,7 +1,6 @@
 package com.zerobase.wifi.mapper;
 
 import com.zerobase.wifi.dto.BookMarkDTO;
-import com.zerobase.wifi.dto.BookMarkGroupDTO;
 import com.zerobase.wifi.dto.WifiDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,15 +11,6 @@ import java.util.Map;
 public interface BookMarkMapper {
 
 
-
-    void insertBookMark(Map<String, Object> map);
-
-    List<BookMarkGroupDTO> getBookMarkList();
-
-    void updateBookMark(Map<String, Object> map);
-
-    void deleteBookMarkGroup(long id);
-
     void addBookMark(Map<String, Object> map);
 
     List<BookMarkDTO> getBookMark();
@@ -29,5 +19,4 @@ public interface BookMarkMapper {
 
     WifiDTO getDetail(String mgr_no);
 
-    int getNo(String bookMarkName);
 }

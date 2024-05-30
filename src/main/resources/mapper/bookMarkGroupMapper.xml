@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.zerobase.wifi.mapper.BookMarkGroupMapper">
+
+    <select id="bookMarkNameList" resultType="bookMarkGroupDTO">
+        select bookMarkName from bookMarkGroup
+        order by no
+    </select>
+
+    <!--북마크 저장-->
+    <insert id="insertBookMarkGroup" parameterType="Map">
+        insert into bookMarkGroup (bookMarkName, no) values (#{bookMarkName}, #{no});
+    </insert>
+
+    <!--북마크 목록-->
+    <select id="getBookMarkGroupList" resultType="BookMarkGroupDTO">
+        select * from bookMarkGroup
+    </select>
+
+    <!--북마크 수정-->
+    <update id="updateBookMarkGroup" parameterType="map">
+        update bookMarkGroup set bookMarkName=#{bookMarkName}, no=#{no}
+        where id =#{id}
+    </update>
+
+    <!--북마크 삭제-->
+    <delete id="deleteBookMarkGroup" parameterType="long">
+        delete from bookMarkGroup where id=#{id}
+    </delete>
+
+
+</mapper>

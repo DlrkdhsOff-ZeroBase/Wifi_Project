@@ -69,7 +69,7 @@ public class APIController {
             Document doc = builder.parse(new InputSource(new StringReader(response)));
             doc.getDocumentElement().normalize();
 
-            // "list_total_count" 엘리먼트 찾기
+            // "list_total_count" 값 찾기
             NodeList nodeList = doc.getElementsByTagName("list_total_count");
 
             if (nodeList.getLength() > 0) {

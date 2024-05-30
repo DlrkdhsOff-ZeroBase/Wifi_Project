@@ -14,13 +14,13 @@ public class HistoryService {
     private HistoryMapper historyMapper;
 
     // 검색 기록을 가지고 오는 메서드
-    public List<HistoryDTO> getHistory() {
-        return historyMapper.getHistory();
+    public List<HistoryDTO> getHistoryList() {
+        return historyMapper.getHistoryList();
     }
 
     // 검색 기록울 삭제하는 메서드
     public List<HistoryDTO> deleteHistory(long id) {
         historyMapper.deleteHistory(id);
-        return historyMapper.getHistory();
+        return historyMapper.getHistoryList();
     }
 }

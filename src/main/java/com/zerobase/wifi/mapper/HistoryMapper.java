@@ -11,12 +11,10 @@ public interface HistoryMapper {
     // 검색기록 저장
     void saveHistory(Map<String, Double> map);
 
-    // 검색 기록 반환
-    List<HistoryDTO> getHistory();
+    // 검색기록 반환
+    List<HistoryDTO> getHistoryList();
 
-    // 프로시저를 통해 검색기록 삭제
+    // 검색기록 삭제
     void deleteHistory(long id);
 
-    // 프로시저를 통한 검색기록 저장
-    void insertHistory(Map<String, Double> map);
 }

@@ -20,25 +20,19 @@ public class WifiService {
     private HistoryMapper historyMapper;
 
     // 와이파이 정보를 가지고 오는 메서드
-    public List<WifiDTO> getList(double lat, double lnt) {
+    public List<WifiDTO> getWifiInfoList(double lat, double lnt) {
         Map<String, Double> map = new HashMap<>();
         map.put("lat", lat);
         map.put("lnt", lnt);
 
-        // wifiMapper.getHistory()이 비어 있는지 확인
-        if (historyMapper.getHistory().isEmpty()) {
-            // 비어 있다면 바로 저장
-            historyMapper.saveHistory(map);
-        } else {
-            // 비어 있지 않다면 프로시저를 통해 저장
-            historyMapper.insertHistory(map);
-        }
+        // 검색한 좌표를 history에 저장
+        historyMapper.saveHistory(map);
 
-        List<WifiDTO> list = wifiMapper.get_Wifi_Info(map);
-        for (WifiDTO dto : list) {
+        List<WifiDTO> wifiInfoList = wifiMapper.getWifiInfoList(map);
+        for (WifiDTO dto : wifiInfoList) {
             dto.setDistance(getDistance(lat, lnt, dto.getLat(), dto.getLnt()));
         }
-        return list;
+        return wifiInfoList;
     }
 
     // 현재 좌표와 거리 비교할 좌표의 거리 구하는 메서드

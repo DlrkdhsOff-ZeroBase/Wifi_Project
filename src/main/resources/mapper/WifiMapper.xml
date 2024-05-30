@@ -20,7 +20,7 @@
     </insert>
 
     <!--현재 내 위치 거리순으로 반환-->
-    <select id="get_Wifi_Info" resultType="WifiDTO" parameterType="Map">
+    <select id="getWifiInfoList" resultType="WifiDTO" parameterType="Map">
         select *,
                ST_Distance_Sphere(point(lnt, lat), point(#{lnt}, #{lat}))
                    as distance

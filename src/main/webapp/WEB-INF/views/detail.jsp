@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:useBean id="bookMarkGroupList" scope="request" type="java.util.List" />
+<jsp:useBean id="bookMarkNameList" scope="request" type="java.util.List" />
 <jsp:useBean id="wifiInfoDetail" scope="request" type="com.zerobase.wifi.dto.WifiDTO" />
 <!DOCTYPE html>
 <html>
@@ -67,7 +67,7 @@
         <label>
             <select name="bookMarkName">
                 <option value="none" selected>북마크 그룹 이름 선택</option>
-                <c:forEach var="list" items="${bookMarkGroupList}">
+                <c:forEach var="list" items="${bookMarkNameList}">
                     <option value="${list.bookMarkName}">
                             ${list.bookMarkName}
                     </option>

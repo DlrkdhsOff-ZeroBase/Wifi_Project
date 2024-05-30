@@ -13,6 +13,6 @@ public interface WifiMapper {
     void save(WifiDTO wifiDTO);
 
     // 현재 내 위치에서 거리순으로 데이터 반환
-    List<WifiDTO> get_Wifi_Info(Map<String, Double> map);
+    List<WifiDTO> getWifiInfoList(Map<String, Double> map);
 
 }

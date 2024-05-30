@@ -65,8 +65,8 @@
     </thead>
     <tbody>
     <c:choose>
-        <c:when test="${not empty HistoryList}">
-            <c:forEach var="dto" items="${HistoryList}">
+        <c:when test="${not empty historyList}">
+            <c:forEach var="dto" items="${historyList}">
                 <tr>
                     <td>${dto.id}</td>
                     <td>${dto.lat}</td>

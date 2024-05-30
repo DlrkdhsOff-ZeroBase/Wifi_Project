@@ -20,8 +20,8 @@ public class HistoryController {
     @GetMapping("/getHistory")
     public String history(Model model) {
 
-        List<HistoryDTO> HistoryList = historyService.getHistory();
-        model.addAttribute("HistoryList", HistoryList);
+        List<HistoryDTO> historyList = historyService.getHistoryList();
+        model.addAttribute("historyList", historyList);
 
         return "history";
     }

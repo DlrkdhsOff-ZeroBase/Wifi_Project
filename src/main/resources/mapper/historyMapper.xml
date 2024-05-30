@@ -12,18 +12,13 @@
     </insert>
 
     <!--검색기록 반환-->
-    <select id="getHistory" resultType="HistoryDTO">
+    <select id="getHistoryList" resultType="HistoryDTO">
         select * from history
     </select>
 
     <!--검색기록 삭제-->
     <delete id="deleteHistory" parameterType="long">
-        call delete_history(#{id})
+        delete from history where id=#{id}
     </delete>
-
-    <!--새로운 순서대로 다시 저장-->
-    <insert id="insertHistory" parameterType="map">
-        call insert_history(#{lat}, #{lnt})
-    </insert>
 
 </mapper>
