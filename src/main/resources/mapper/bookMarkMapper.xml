@@ -6,19 +6,25 @@
 
 <mapper namespace="com.zerobase.wifi.mapper.BookMarkMapper">
 
+    <!--상세 정보-->
+    <select id="getDetail" parameterType="string" resultType="wifiDTO">
+        select * from wifiAPI where mgr_no=#{mgr_no}
+    </select>
+
     <!--북마크 저장-->
     <insert id="insertBookMark" parameterType="Map">
-        insert into bookMarkGroup (name, no) values (#{name}, #{no});
+        insert into bookMarkGroup (bookMarkName, no) values (#{bookMarkName}, #{no});
     </insert>
 
     <!--북마크 목록-->
     <select id="getBookMarkList" resultType="BookMarkGroupDTO">
         select * from bookMarkGroup
+        order by no
     </select>
 
     <!--북마크 수정-->
     <update id="updateBookMark" parameterType="map">
-        update bookMarkGroup set name=#{name}, no=#{no}
+        update bookMarkGroup set bookMarkName=#{bookMarkName}, no=#{no}
         where id =#{id}
     </update>
 
@@ -27,14 +33,19 @@
         delete from bookMarkGroup where id=#{id}
     </delete>
 
+    <!--순서-->
+    <select id="getNo" parameterType="string" resultType="int">
+        select no from BookMarkGroup where bookMarkName=#{bookMarkName}
+    </select>
+
     <!--북마크 등록-->
     <insert id="addBookMark" parameterType="map">
-        insert into bookmark (bookMarkName, wifi_name) values (#{name}, #{wifi_name});
+        insert into bookmark (bookMarkName, no, wifi_name) values (#{bookMarkName}, #{no}, #{wifi_name});
     </insert>
 
     <!--등록한 북마크 목록-->
     <select id="getBookMark" resultType="bookMarkDTO">
-        select * from bookmark
+        select id, bookMarkName, wifi_name, date from bookmark
     </select>
 
     <!--등록한 북마크 삭제-->
@@ -42,8 +53,5 @@
         delete from bookMark where id=#{id}
     </delete>
 
-    <select id="getDetail" parameterType="string" resultType="wifiDTO">
-        select * from wifiAPI where mgr_no=#{mgr_no}
-    </select>
 
 </mapper>

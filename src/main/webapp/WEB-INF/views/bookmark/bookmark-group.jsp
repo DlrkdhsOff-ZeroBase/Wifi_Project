@@ -80,7 +80,7 @@
             <%= dto.getId() %>
         </td>
         <td>
-            <%= dto.getName() %>
+            <%= dto.getBookMarkName() %>
         </td>
         <td>
             <%= dto.getNo() %>

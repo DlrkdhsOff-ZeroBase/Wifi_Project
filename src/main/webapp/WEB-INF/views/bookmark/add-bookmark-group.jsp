@@ -67,7 +67,7 @@
         <tr>
             <th>북마크 이름</th>
             <td>
-                <label for="name"></label><input type="text" name="name" id="name">
+                <label for="bookMarkName"></label><input type="text" name="bookMarkName" id="bookMarkName">
             </td>
         </tr>
         <tr>
@@ -87,13 +87,13 @@
 
 <script type="text/javascript">
     function validateForm() {
-        const name = document.getElementById("name").value;
+        const bookMarkName = document.getElementById("bookMarkName").value;
         const no = document.getElementById("no").value;
 
-        if (name === "" && no === "") {
+        if (bookMarkName === "" && no === "") {
             alert("모든 필드를 입력해주세요.");
             return false;
-        }else if (name === "") {
+        }else if (bookMarkName === "") {
             alert("이름을 입력해주세요.");
             return false;
         }else if (no === "") {

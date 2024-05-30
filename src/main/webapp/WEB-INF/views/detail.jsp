@@ -69,13 +69,13 @@
 
 <div id="bookmark-list">
     <form action="add-bookmark" method="post" id="bookmark-form">
-        <select name="name">
+        <select name="bookMarkName">
             <option value="none" selected>북마크 그룹 이름 선택</option>
             <%
                 for (BookMarkGroupDTO dto : list) {
             %>
-            <option value="<%= dto.getName() %>">
-                <%= dto.getName() %>
+            <option value="<%= dto.getBookMarkName() %>">
+                <%= dto.getBookMarkName() %>
             </option>
             <%
                 }
