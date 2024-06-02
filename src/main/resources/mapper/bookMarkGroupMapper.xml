@@ -6,6 +6,7 @@
 
 <mapper namespace="com.zerobase.wifi.mapper.BookMarkGroupMapper">
 
+    <!--순서의 오름차순으로 값 출력-->
     <select id="bookMarkNameList" resultType="bookMarkGroupDTO">
         select bookMarkName from bookMarkGroup
         order by no
