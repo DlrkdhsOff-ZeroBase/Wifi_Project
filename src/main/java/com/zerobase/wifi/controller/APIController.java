@@ -53,10 +53,11 @@ public class APIController {
                 end = Math.min(end, maxData);
             }
             model.addAttribute("totalFetched", totalFetched);
+            return "lode-wifi-data";
         } catch (Exception e) {
-            e.printStackTrace();
+            model.addAttribute("empty", false);
+            return "index";
         }
-        return "lode-wifi-data";
     }
 
     public int getTotalCount() throws Exception {

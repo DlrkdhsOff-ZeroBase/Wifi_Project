@@ -124,6 +124,14 @@
     </c:choose>
     </tbody>
 </table>
+<script type="text/javascript">
+    window.onload = function() {
+        const check = "<%=request.getAttribute("empty") %>";
+        if (check === "false") {
+            alert("Open API 와이파이 정보가 존재합니다");
+        }
+    };
+</script>
 
 <script>
     const params = new URLSearchParams(window.location.search);
